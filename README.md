@@ -22,5 +22,6 @@ HTML、CSS（介面設計與樣式）
 JavaScript（盤面生成與遊戲邏輯）
 
 【本專案採用 Apache License 2.0。】
+
  唯一作者 YAOMIN-YI（姚旻毅）
 
