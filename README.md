@@ -2,6 +2,7 @@
 
 一個使用純 HTML、CSS 和 JavaScript 開發的互動式數獨遊戲，可直接在瀏覽器中輕鬆體驗無須下載。
 體驗網址 >>> https://yaomin-yi.github.io/Sudoku-works/Sudoku.html
+
 【功能特色】
 
 互動式輸入：滑鼠移動到空白格時變為黃色即可直接輸入數字。
