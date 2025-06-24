@@ -8,6 +8,7 @@
       font-family: sans-serif;
       text-align: center;
       background-color: #fdf4e3;
+      overflow-x: hidden;
     }
     table {
       border-collapse: collapse;
@@ -43,15 +44,56 @@
       margin: 5px;
       padding: 10px 20px;
       font-size: 16px;
+      cursor: pointer;
+      border-radius: 5px;
+      border: 1px solid #888;
+      background: #eee;
+      transition: box-shadow 0.2s, transform 0.2s;
     }
     .victory {
       background: red;
       color: white;
       padding: 20px;
       font-size: 24px;
+      border-radius: 12px;
+      animation: popVictory 0.6s cubic-bezier(0.24,1.25,0.52,1.05);
+      margin-top: 18px;
+      box-shadow: 0 0 32px #8003;
+      position: relative;
+      z-index: 20;
+      min-width: 330px;
+    }
+    @keyframes popVictory {
+      0% { transform: scale(0.7); opacity: 0; }
+      70% { transform: scale(1.07);}
+      100% { transform: scale(1); opacity: 1;}
     }
     .error {
       color: red !important;
+    }
+    /* 彩帶動畫樣式 */
+    .confetti {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 10px;
+      height: 18px;
+      pointer-events: none;
+      border-radius: 3px;
+      z-index: 99;
+      opacity: 0.85;
+      animation: fallConfetti 1.8s cubic-bezier(0.5,0.8,0.2,1.0) forwards;
+    }
+    @keyframes fallConfetti {
+      0% { opacity:1; }
+      100% { transform: translateY(100vh) rotateZ(480deg); opacity: 0.2; }
+    }
+    .fadeOut {
+      animation: fadeOutVictory 0.7s both;
+    }
+    @keyframes fadeOutVictory {
+      from { opacity: 1; transform: scale(1);}
+      to   { opacity: 0; transform: scale(0.8);}
     }
   </style>
 </head>
@@ -67,14 +109,43 @@
 
   <div id="victory-message" class="victory" style="display:none;">
     VICTORY<br>Do you want to try again?<br>
-    <button onclick="refreshGame()">Yes</button>
-    <button onclick="alert('Thanks for playing!')">No</button>
+    <button id="victory-yes" onclick="refreshGame()">Yes</button>
+    <button id="victory-no" onclick="victoryNo()">No</button>
   </div>
 
   <script>
     let puzzle, solution;
     let currentInput = null;
     let victoryShown = false;
+
+    // 彩帶顏色
+    const confettiColors = ['#ff0', '#3f6', '#3cf', '#f36', '#fc0', '#6cf', '#0ff', '#f09'];
+
+    // 產生灑彩帶動畫
+    function throwConfetti() {
+      for (let i = 0; i < 48; i++) {
+        const div = document.createElement('div');
+        div.className = 'confetti';
+        div.style.left = (window.innerWidth * Math.random() * 0.95) + 'px';
+        div.style.background = confettiColors[Math.floor(Math.random() * confettiColors.length)];
+        div.style.transform = `rotate(${Math.random()*360}deg)`;
+        div.style.animationDelay = (Math.random() * 0.5) + 's';
+        div.style.width = 8 + Math.random() * 6 + 'px';
+        div.style.height = 14 + Math.random() * 10 + 'px';
+        document.body.appendChild(div);
+        setTimeout(()=>div.remove(), 2100);
+      }
+    }
+
+    // No按鈕動畫
+    function victoryNo() {
+      const victoryBox = document.getElementById('victory-message');
+      victoryBox.classList.add('fadeOut');
+      setTimeout(() => {
+        victoryBox.style.display = 'none';
+        victoryBox.classList.remove('fadeOut');
+      }, 700);
+    }
 
     function generateFullSudoku() {
       const board = Array.from({ length: 9 }, () => Array(9).fill(0));
@@ -183,6 +254,7 @@
       });
       document.getElementById('victory-message').style.display = 'block';
       victoryShown = true;
+      throwConfetti(); // 彩帶動畫
     }
     function cheat() {
       if (currentInput && !currentInput.disabled) {
@@ -208,6 +280,7 @@
       }
       document.getElementById('victory-message').style.display = 'block';
       victoryShown = true;
+      throwConfetti();
     }
     function checkConflict() {
       const inputs = document.querySelectorAll('input');
