@@ -2,7 +2,7 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="UTF-8">
-  <title>數獨專案</title>
+  <title>數獨遊戲</title>
   <style>
     body {
       font-family: sans-serif;
@@ -61,7 +61,7 @@
 
   <div class="button-group">
     <button onclick="showAnswer()">Show Answer</button>
-    <button onclick="cheat()">skip</button>
+    <button onclick="cheat()">Cheat</button>
     <button onclick="refreshGame()">Refresh</button>
   </div>
 
@@ -151,10 +151,8 @@
           } else {
             input.classList.add('highlight');
             input.addEventListener('input', e => {
-              const val = e.target.value;
-              if (!/^[1-9]$/.test(val)) {
-                e.target.value = '';
-              }
+              // 只保留最後一個合法數字
+              e.target.value = e.target.value.replace(/[^1-9]/g, '').slice(-1);
               checkConflict();
               checkVictory();
             });
