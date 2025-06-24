@@ -1,4 +1,4 @@
-數獨遊戲作品 Sudoku Game
+《數獨遊戲作品 Sudoku Game》
 
 一個使用純 HTML、CSS 和 JavaScript 開發的互動式數獨遊戲，可直接在瀏覽器中輕鬆體驗無須下載。
 
@@ -15,17 +15,12 @@
 
 完成提醒：成功解題時彈出提示訊息與重新挑戰選項。
 
-使用技術
+【使用技術】
 
 HTML、CSS（介面設計與樣式）
 
 JavaScript（盤面生成與遊戲邏輯）
 
-授權
-
-本專案採用 Apache License 2.0。
-
-作者
-
-YAOMIN-YI（姚旻毅）
+【本專案採用 Apache License 2.0。】
+ 唯一作者 YAOMIN-YI（姚旻毅）
 
